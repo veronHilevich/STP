@@ -18,7 +18,7 @@
                </cursor></Button>
          </children>
          <cursor>
-            <Cursor fx:constant="MOVE" />
+            <Cursor fx:constant="DEFAULT" />
          </cursor>
       </AnchorPane>
       <Label layoutX="226.0" layoutY="16.0" prefHeight="36.0" prefWidth="169.0" text="Добро пожаловать!" textFill="#fffbfb">

@@ -31,20 +31,11 @@ public class Controller {
     @FXML
     void initialize() {
         loginButton.setOnAction(event ->{
-            try {
-                System.setOut(new PrintStream(System.out, true, "utf-8"));
-                Properties properties=new Properties();
-                properties.setProperty("user","sys as sysdba");
-                properties.setProperty("password","BATEchampion2017");
-                properties.setProperty("useUnicode","true");
-                properties.setProperty("characterEncoding","UTF-8");
-                Class.forName("oracle.jdbc.driver.OracleDriver");
-                Connection cnct = DriverManager.getConnection(
-                        "jdbc:oracle:thin:@localhost:1521/orcl", properties);
-                Statement stmt = cnct.createStatement();
+            try {DatabaseHandler databaseHandler=new DatabaseHandler();
+                Statement stmt =  databaseHandler.getCnct().createStatement();
                 PreparedStatement preparedStatement = null;
 
-                preparedStatement = cnct.prepareStatement("SELECT position FROM employees where full_name=?");
+                preparedStatement =  databaseHandler.getCnct().prepareStatement("SELECT position FROM employees where full_name=?");
                 preparedStatement.setString(1,fullNameField.getText());
                 ResultSet resultSet=preparedStatement.executeQuery();
                 while(resultSet.next()){
