@@ -9,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.PrintStream;
 import java.sql.*;
@@ -36,11 +38,8 @@ public class AdminController {
     @FXML
     void initialize(){
         try {
-            System.setOut(new PrintStream(System.out, true, "utf-8"));
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection cnct = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@localhost:1521/orcl", "sys as sysdba","BATEchampion2017");
-            Statement stmt = cnct.createStatement();
+            DatabaseHandler databaseHandler=new DatabaseHandler();
+            Statement stmt = databaseHandler.getCnct().createStatement();
             ResultSet resultSet=stmt.executeQuery("SELECT contract_number,to_char(date_of_conclusion,'DD/MM/YYYY'),client_information,to_char(date_of_Expiry,'DD/MM/YYYY'),cost_of_work FROM contracts");
             while (resultSet.next()){
                 String contract_number= Integer.toString(resultSet.getInt("contract_number"));
@@ -60,13 +59,8 @@ public class AdminController {
         buttonNewClient.setOnAction(event ->{
             try {
                 buttonNewClient.getScene().getWindow().hide();
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/sample/newClient.fxml"));
-                loader.load();
-                Parent root1 = loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root1));
-                stage.showAndWait();
+               EventFrame eventFrame=new EventFrame();
+               eventFrame.openNewFrame("/sample/newClient.fxml");
             }
             catch (Exception ex) {
                 ex.printStackTrace();
