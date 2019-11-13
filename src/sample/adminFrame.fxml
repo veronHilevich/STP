@@ -13,12 +13,12 @@
    <children>
       <AnchorPane layoutX="-2.0" layoutY="64.0" prefHeight="367.0" prefWidth="603.0" style="-fx-background-color: #ffffff; -fx-border-color: #735247;">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="393.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="426.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@assets/xANe9yYlyIvPg_.png" />
+                  <Image url="@assets/LOCAL_AREA_NETWORK-512.png" />
                </image>
             </ImageView>
-            <ListView fx:id="listOfContracts" layoutX="87.0" layoutY="23.0" prefHeight="128.0" prefWidth="425.0">
+            <ListView fx:id="listOfContracts" editable="true" layoutX="87.0" layoutY="23.0" prefHeight="128.0" prefWidth="425.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ListView>
@@ -58,7 +58,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="buttonNewClient" layoutX="16.0" layoutY="272.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="176.0" text="Новый клиент">
+            <Button fx:id="buttonNewClient" layoutX="213.0" layoutY="272.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="176.0" text="Новый клиент">
                <font>
                   <Font name="Comic Sans MS" size="12.0" />
                </font>

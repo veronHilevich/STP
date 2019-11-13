@@ -39,19 +39,9 @@ public class AdminController {
     void initialize(){
         try {
             DatabaseHandler databaseHandler=new DatabaseHandler();
-            Statement stmt = databaseHandler.getCnct().createStatement();
-            ResultSet resultSet=stmt.executeQuery("SELECT contract_number,to_char(date_of_conclusion,'DD/MM/YYYY'),client_information,to_char(date_of_Expiry,'DD/MM/YYYY'),cost_of_work FROM contracts");
-            while (resultSet.next()){
-                String contract_number= Integer.toString(resultSet.getInt("contract_number"));
-                String date_of_conclusion=resultSet.getString("to_char(date_of_conclusion,'DD/MM/YYYY')");
-                String client_information=resultSet.getString("client_information");
-                String date_of_Expiry=resultSet.getString("to_char(date_of_Expiry,'DD/MM/YYYY')");
-                String cost_of_work=Float.toString(resultSet.getFloat("Cost_of_work"));
-                listOfContracts.getItems().addAll(contract_number+"        "+date_of_conclusion+"       "+date_of_Expiry+"    "+client_information+cost_of_work);
-                listOfContracts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+           databaseHandler.infoInListView(listOfContracts);  //заполняем листвью данными
             }
 
-        }
         catch (Exception ex){
             ex.printStackTrace();
         }
@@ -63,6 +53,35 @@ public class AdminController {
                eventFrame.openNewFrame("/sample/newClient.fxml");
             }
             catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        buttonDeleteContract.setOnAction(event -> {
+            String selectedItem = listOfContracts.getSelectionModel().getSelectedItem();
+            try {
+                DatabaseHandler databaseHandler = new DatabaseHandler();
+                Statement stmt = databaseHandler.getCnct().createStatement();
+                PreparedStatement preparedStatement = null;
+                preparedStatement = databaseHandler.getCnct().prepareStatement("DELETE FROM Contracts WHERE contract_number=?");
+                String[] params = selectedItem.split(" ");   //разделяем строку договора до первого пробела в масив
+                String firstString = params[0];
+                System.out.println(firstString);
+                preparedStatement.setInt(1, Integer.parseInt(firstString));
+                preparedStatement.executeQuery();
+                databaseHandler.infoInListView(listOfContracts);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+
+        });
+        buttonAddContract.setOnAction(event -> {
+            try {
+                buttonAddContract.getScene().getWindow().hide();
+                EventFrame eventFrame=new EventFrame();
+                eventFrame.openNewFrame("/sample/newContract.fxml");
+            }
+            catch (Exception ex){
                 ex.printStackTrace();
             }
         });
